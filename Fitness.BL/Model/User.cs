@@ -7,15 +7,15 @@ namespace Fitness.BL.Model
     public class User
     {
         public string Name { get; }
+        public Gender Gender { get; set; }
 
-        public Gender Gender { get; }
-
-        public DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
 
         public double Weight { get; set; }
 
         public double Height { get; set; }
 
+        public int Age { get { return DateTime.Now.Year - this.BirthDate.Year; } }
 
         public User(String name,
                     Gender gender, 
@@ -57,9 +57,18 @@ namespace Fitness.BL.Model
             this.Height = Height;
         }
 
+        public User(String name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Имя пользователя не может быть пустым или пробелом. ", nameof(name));
+            }
+            this.Name = name;
+        }
+
         public override string ToString()
         {
-            return Name;
+            return Name + " " + Age;
         }
 
     }

@@ -31,14 +31,16 @@ namespace Fitness.BL.Controller.Tests
             var gender = "man";
             var controller = new UserController(userName);
 
-            controller.SetNewUserData(userName, birthdate, weight, height);
+            controller.SetNewUserData(gender, birthdate, weight, height);
             var controller2 = new UserController(userName);
+            
 
             Assert.AreEqual(userName, controller2.CurrentUser.Name);
-            Assert.AreEqual(gender, controller2.CurrentUser.Gender.Name);
+            Assert.AreEqual(birthdate, controller2.CurrentUser.BirthDate);
             Assert.AreEqual(weight, controller2.CurrentUser.Weight);
             Assert.AreEqual(height, controller2.CurrentUser.Height);
-            Assert.AreEqual(birthdate, controller2.CurrentUser.BirthDate);
+            Assert.AreEqual(gender, controller2.CurrentUser.Gender.Name);
+
         }
     }
 }

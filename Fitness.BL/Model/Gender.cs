@@ -9,7 +9,7 @@ namespace Fitness.BL.Model
     [Serializable]
     public class Gender
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
         public Gender(String name)
         {

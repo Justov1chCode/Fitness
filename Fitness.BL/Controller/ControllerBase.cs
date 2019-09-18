@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Fitness.BL.Controller
 {
     public abstract class ControllerBase
-    {
+    { 
         protected void Save(string fileName, object item)
         {
             var formatter = new BinaryFormatter();

@@ -2,7 +2,9 @@
 using Fitness.BL.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,16 +14,18 @@ namespace Fitness.CMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение Fitness");
+            var culture = CultureInfo.CurrentCulture;
+            var resourceManager = new ResourceManager("Fitness.CMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourceManager.GetString("welcome_msg", culture));
 
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(resourceManager.GetString("entername_msg", culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
             if (userController.IsNewUser)
             {
-                Console.WriteLine("Введите пол: ");
+                Console.WriteLine(Languages.Messages.choosegender_msg);
                 var gender = Console.ReadLine();
                 var weight = ParseDouble("вес");
                 var height = ParseDouble("рост");
@@ -31,8 +35,8 @@ namespace Fitness.CMD
             }
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine("что вы хотите сделать: ");
-            Console.WriteLine("Е - ввести приём пищи");
+            Console.WriteLine(Languages.Messages.choosemove_msg);
+            Console.WriteLine(Languages.Messages.eismakechoose_msg);
             var key = Console.ReadKey(true);
 
             if(key.Key == ConsoleKey.E)
@@ -52,13 +56,13 @@ namespace Fitness.CMD
 
         private static (Food Food, double Weight) EnterEating()
         {
-            Console.WriteLine("Введите имя продукта: ");
+            Console.WriteLine(Languages.Messages.name_msg);
             var food = Console.ReadLine();
-            var callories = ParseDouble("калорийность");
-            var fats = ParseDouble("жиры");
-            var prots = ParseDouble("белки");
-            var carbs = ParseDouble("углеводы");
-            var weight = ParseDouble("вес порции");
+            var callories = ParseDouble(Languages.Messages.calories_msg);
+            var fats = ParseDouble(Languages.Messages.fats_msg);
+            var prots = ParseDouble(Languages.Messages.prots_msg);
+            var carbs = ParseDouble(Languages.Messages.carbs_msg);
+            var weight = ParseDouble(Languages.Messages.weight_msg);
             var product = new Food(food, prots, fats, carbs, callories);
             return (product, weight);
         }
@@ -68,14 +72,14 @@ namespace Fitness.CMD
             DateTime birthDate;
             while (true)
             {
-                Console.WriteLine("Введите дату своего рождения dd.MM.yyyy");
+                Console.WriteLine(Languages.Messages.datechoose_msg);
                 if (DateTime.TryParse(Console.ReadLine(), out birthDate))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Повторите ввод");
+                    Console.WriteLine(Languages.Messages.repeatinsert_msg);
 
                 }
             }
